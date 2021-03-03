@@ -1,0 +1,243 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{braket}
+\usepackage{amsmath,amssymb}
+\begin{document}
+
+\subsection*{Braket notation}
+State vector (Ket): 
+$$\Ket{a} = 
+\begin{bmatrix}
+    a_0\\
+    a_1\\
+    \vdots\\
+    a_n
+\end{bmatrix}
+$$
+Conjugate transpose of state vector (Bra): 
+$$\Bra{a} = 
+\begin{bmatrix}
+    a^*_0 & a^*_1 & \dots & a^*_n
+\end{bmatrix}
+$$
+Addition:
+$$\Ket{a}+\Ket{b}=
+\begin{bmatrix}
+    a_0+b_0\\
+    a_1+b_1\\
+    \vdots\\
+    a_n+b_n
+\end{bmatrix}
+$$
+Scalar Multiplication:
+$$
+    x\Ket{a}=
+    \begin{bmatrix}
+        x\times a_0\\
+        x\times a_1\\
+        \vdots\\
+        x\times a_n
+    \end{bmatrix}
+$$
+Inner Product:
+$$\Braket{a|b}=a^*_0b_0+a^*_1b_1+\dots+a^*_nb_n$$
+Outer Product:
+$$\Ket{a}\Bra{b}=
+\begin{bmatrix}
+    a_0\\
+    a_1\\
+    \vdots\\
+    a_n
+\end{bmatrix}
+\begin{bmatrix}
+    b^*_0 & b^*_1 & \dots & b^*_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+    a_0b^*_0 & a_0b^*_1 & \dots  & a_0b^*_n\\
+    a_1b^*_0 & a_1b^*_1 &        & \vdots\\
+    \vdots   &          & \ddots & \vdots\\
+    a_nb^*_0 & a_nb^*_1 & \dots  & a_nb^*_n
+\end{bmatrix}
+$$
+Tensor Product:
+$$
+\Ket{ab}=\Ket{a}\otimes\Ket{b}=
+\begin{bmatrix}
+    a_0 & \begin{bmatrix} b_0\\b_1\end{bmatrix}\\
+    a_1 & \begin{bmatrix} b_0\\b_1\end{bmatrix}
+\end{bmatrix}=
+\begin{bmatrix}
+    a_0b_0\\
+    a_0b_1\\
+    a_1b_0\\
+    a_1b_1\\
+\end{bmatrix}
+$$
+\newpage
+\subsection*{Qubit State Vector}
+$$\Ket{q} = \alpha\Ket{0} + \beta\Ket{1} =
+\begin{bmatrix}
+    \alpha\\
+    \beta
+\end{bmatrix}
+$$
+$ \alpha \in \mathbb{C}$ being the probability it collapse to 0 when measured\\
+$ \beta  \in \mathbb{C}$ being the probability it collapse to 1 when measured\\
+
+The state that will always measured to be 0:
+$$
+\Ket{0} = 
+\begin{bmatrix}
+    1\\
+    0
+\end{bmatrix}
+$$
+
+The state that will always measured to be 1:
+$$
+\Ket{1} = 
+\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}
+$$
+
+The probability of measuring a state $\Ket{\psi}$ in the state $\Ket{x}$:
+$$p(\Ket{x})=|\braket{x|\psi}|^2$$
+
+Qubit represented in $\theta,\phi\in\mathbb{R}$:
+$$\Ket{q}=\cos\frac{\theta}{2}\Ket{0}+e^{i\phi}\sin\frac{\theta}{2}\Ket{1}$$
+
+\newpage
+\subsection*{Single Quantum Gate}
+\subsubsection*{Pauli Gates}
+X-Gate: Rotate by $\pi$ around the x-axis of Bloch sphere
+$$
+X=
+\begin{bmatrix}
+    0 & 1\\
+    1 & 0
+\end{bmatrix}
+=\Ket{1}\Bra{0}+\Ket{0}\Bra{1}
+$$
+Equivalent to classical NOT when operated on classical states:
+$$X\Ket{0}=\left(\Ket{0}\Bra{1}+\Ket{1}\Bra{0}\right)\Ket{0}=\Ket{0}\Braket{1|0}+\Ket{1}\Braket{0|0}=\Ket{0}\times0+\Ket{1}\times1=\Ket{1}$$
+$$X\Ket{1}=(\Ket{0}\Bra{1}+\Ket{1}\Bra{0})\Ket{1}=\Ket{0}\Braket{1|1}+\Ket{1}\Braket{0|1}=\Ket{0}\times1+\Ket{1}\times0=\Ket{0}$$
+X-basis (eigenstates of X-gate):
+$$
+\Ket{+}=\frac{1}{\sqrt{2}}(\Ket{0}+\Ket{1})
+=\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+    1\\
+    1
+\end{bmatrix}
+$$
+$$
+\Ket{-}=\frac{1}{\sqrt{2}}(\Ket{0}-\Ket{1})
+=\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+    1\\
+    -1
+\end{bmatrix}
+$$
+syntax (qc is of object QuantumCircuit, qubit is index of qubit in the circuit to operate on): 
+\begin{verbatim*}
+qc.x(qubit)    
+\end{verbatim*}
+Y-Gate: Rotate by $\pi$ around the Y-axis of Bloch sphere
+$$
+Y=
+\begin{bmatrix}
+    0 & -i\\
+    i & 0
+\end{bmatrix}
+=i\Ket{1}\Bra{0}-i\Ket{0}\Bra{1}
+$$
+Y-basis:
+$$
+\Ket{\circlearrowleft}=\frac{1}{\sqrt{2}}(\Ket{0}+i\Ket{1})
+=\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+    1\\
+    i
+\end{bmatrix}
+$$
+$$
+\Ket\circlearrowright=\frac{1}{\sqrt{2}}(\Ket{0}-i\Ket{1})
+=\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+    1\\
+    -i
+\end{bmatrix}
+$$
+syntax: 
+\begin{verbatim*}
+qc.y(qubit)    
+\end{verbatim*}
+Z-Gate: Rotate by $\pi$ around the Z-axis of Bloch sphere
+$$
+Z=
+\begin{bmatrix}
+    1 & 0\\
+    0 & -1
+\end{bmatrix}
+=\Ket{0}\Bra{0}-\Ket{1}\Bra{1}
+$$
+Z-basis: 
+$$
+\Ket{0}=
+\begin{bmatrix}
+    1\\
+    0
+\end{bmatrix}
+$$$$
+\Ket{1}=
+\begin{bmatrix}
+    0\\
+    1
+\end{bmatrix}
+$$
+syntax: 
+\begin{verbatim*}
+qc.z(qubit)    
+\end{verbatim*}
+\newpage
+\subsubsection*{Hadamard Gate (H-gate)}
+Rotation around the Bloch vector [1,0,1] (line between x and z-axis)
+$$H=\frac{1}{\sqrt{2}}
+\begin{bmatrix}
+    1 & 1\\
+    1 & -1
+\end{bmatrix}=\Ket{+}\Bra{0}+\Ket{-}\Bra{1}$$
+Transform Z-basis ($\Ket{0}$ and $\Ket{1}$) to X-basis ($\Ket{+}$ and $\Ket{-}$):
+$$H\Ket{0}=\left(\Ket{+}\Bra{0}+\Ket{-}\Bra{1}\right)\Ket{0}=\Ket{+}\Braket{0|0}+\Ket{-}\Braket{1|0}=\Ket{+}\times1+\Ket{-}\times0=\Ket{+}$$
+$$H\Ket{1}=\left(\Ket{+}\Bra{0}+\Ket{-}\Bra{1}\right)\Ket{1}=\Ket{+}\Braket{0|1}+\Ket{-}\Braket{1|1}=\Ket{+}\times0+\Ket{-}\times1=\Ket{-}$$
+syntax: 
+\begin{verbatim*}
+qc.h(qubit)    
+\end{verbatim*}
+\subsubsection*{$R_\phi$-gate}
+Rotation of $\phi$ around z-axis
+$$R_\phi=
+\begin{bmatrix}
+    1 & 0\\
+    0 & e^{i\phi}
+\end{bmatrix}=\Ket{0}\Bra{0}+e^{i\phi}\Ket{1}\Bra{1}
+$$
+syntax (phi is $\phi$ in radian): 
+\begin{verbatim*}
+qc.rz(phi, qubit)    
+\end{verbatim*}
+Identity Gate (I-gate)
+$$I=
+\begin{bmatrix}
+    1 & 0\\
+    0 & 1
+\end{bmatrix}=\Ket{0}\Bra{0}+\Ket{1}\Bra{1}$$
+syntax: 
+\begin{verbatim*}
+qc.i(qubit)    
+\end{verbatim*}
+
+\end{document}
